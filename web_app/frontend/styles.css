@@ -171,6 +171,32 @@ button, select, textarea { font: inherit; }
   text-align: center;
 }
 
+.github-link {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: #111827;
+  background: #fff;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.github-link:hover {
+  transform: translateY(-1px);
+  border-color: #b8c3d4;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .12);
+}
+
+.github-link svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
 .chat {
   overflow: auto;
   margin: 14px 18px 0;
