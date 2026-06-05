@@ -1,5 +1,7 @@
 # LW Image Tool
 
+![LW生图工具预览](docs/preview.png)
+
 LW生图工具是一个画布式生图项目，兼容 OpenAI 风格图片接口。
 
 项目包含两个互不影响的程序：
@@ -40,4 +42,3 @@ python -m image_studio.app
 - `.env.*`
 - `dist/`
 - `build/`
-
