@@ -14,3 +14,10 @@ outputs/
 web_app/data/
 .env
 .env.*
+
+# Local desktop app, not part of the open-source web release.
+src/
+tests/
+icon.ico
+pyproject.toml
+requirements.txt
