@@ -1,44 +1,43 @@
-# T8-电商小红书配图工具
+# LW Image Tool
 
-Lightweight Windows-oriented desktop client for a running `chatgpt2api` service.
+LW生图工具是一个画布式生图项目，兼容 OpenAI 风格图片接口。
 
-## Features
+项目包含两个互不影响的程序：
 
-- Text-to-image via `POST /v1/images/generations`
-- Image-to-image via `POST /v1/images/edits`
-- Dark/light workspace themes with the last choice remembered
-- Left-side generation controls with prompt, reference image, quality, size, ratio, and count
-- Result canvas with image preview actions
-- Model loading via `GET /v1/models`
-- Local image saving
-- SQLite generation history
-- Built-in API endpoint and key
+- `web_app/`：独立 Web 版生图工具，支持对话、素材中心、提示词模板、接口设置和模型获取。
+- `src/image_studio/`：Python 桌面版工具，使用 CustomTkinter 构建。
 
-## Run
+## Web App
+
+```powershell
+cd web_app
+pip install -r requirements.txt
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 7860
+```
+
+打开：
+
+```text
+http://127.0.0.1:7860
+```
+
+## Desktop App
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python -m image_studio.app
-```
-
-If running from source without installing the package, set `PYTHONPATH`:
-
-```powershell
 $env:PYTHONPATH = "$PWD\src"
 python -m image_studio.app
 ```
 
-## Configure
+## Privacy
 
-Open Settings and choose the output directory. The API endpoint and key are built in.
+不要提交本地 API Key。项目已忽略以下本地数据：
 
-## Package
+- `web_app/data/`
+- `.env`
+- `.env.*`
+- `dist/`
+- `build/`
 
-```powershell
-pip install pyinstaller
-pyinstaller --noconfirm --windowed --name T8ImageTool --icon icon.ico --add-data "icon.ico;." --paths src src\image_studio_launcher.py
-```
-
-The executable will be created under `dist\T8ImageTool`.
