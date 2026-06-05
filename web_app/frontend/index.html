@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LW生图工具</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">LW</div>
+          <div>
+            <strong>LW生图工具</strong>
+            <span>公益开源 / image-2</span>
+          </div>
+        </div>
+        <button class="new-chat" id="newChatBtn">+ 新对话</button>
+        <div class="session-list" id="sessionList"></div>
+        <div class="sidebar-actions">
+          <button class="settings-btn" id="settingsBtn">设置</button>
+          <button class="settings-btn danger" id="clearHistoryBtn">清空历史</button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="mode-pill">图像生成 <span>gpt-image-2</span></div>
+          <div class="notice" id="notice">本工具为公益开源项目，官方社区：https://dc.hhhl.cc。加入Q群：116231758 免费提供image-2模型接口。转发二开请注明出处。</div>
+        </header>
+
+        <section class="chat" id="chat">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🖼</div>
+            <strong>还没有生成图片</strong>
+            <span>输入提示词后，结果会显示在这里</span>
+          </div>
+        </section>
+
+        <form class="composer" id="generateForm">
+          <textarea id="prompt" name="prompt" placeholder="描述你想要的图片，输入 @ 可插入参考图"></textarea>
+          <div class="composer-tools">
+            <label class="upload-btn">
+              +
+              <input id="reference" name="reference" type="file" accept="image/*" hidden />
+            </label>
+            <span class="file-chip" id="fileChip">未选择参考图</span>
+            <select id="ratio">
+              <option value="1024x1024">比例 1:1</option>
+              <option value="1536x1024">比例 3:2</option>
+              <option value="1024x1536">比例 2:3</option>
+              <option value="1820x1024">比例 16:9</option>
+              <option value="1024x1820">比例 9:16</option>
+            </select>
+            <select id="model" name="model">
+              <option value="gpt-image-2">gpt-image-2</option>
+              <option value="gpt-image-1">gpt-image-1</option>
+            </select>
+            <select id="quality" name="quality">
+              <option value="auto">自动</option>
+              <option value="high">高</option>
+              <option value="medium">中</option>
+              <option value="low">低</option>
+            </select>
+            <select id="count" name="count">
+              <option value="1">1 张</option>
+              <option value="2">2 张</option>
+              <option value="3">3 张</option>
+              <option value="4">4 张</option>
+            </select>
+            <button type="submit" id="submitBtn">生成</button>
+          </div>
+        </form>
+      </main>
+
+      <aside class="asset-panel">
+        <div class="asset-head">
+          <strong>素材中心</strong>
+          <span id="assetCount">0 张图片</span>
+        </div>
+        <div class="asset-grid" id="assetGrid"></div>
+        <div class="template-section">
+          <div class="template-head">
+            <strong>提示词模板</strong>
+            <button type="button" id="addTemplateBtn">新增</button>
+          </div>
+          <div class="template-list" id="templateList"></div>
+        </div>
+      </aside>
+    </div>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form class="settings-card" id="settingsForm" method="dialog">
+        <div class="settings-head">
+          <strong>接口设置</strong>
+          <button type="button" id="closeSettingsBtn">×</button>
+        </div>
+        <label>
+          <span>API 地址</span>
+          <input id="apiBaseUrl" name="base_url" placeholder="https://api.example.com 或 https://api.example.com/v1" />
+        </label>
+        <label>
+          <span>API Key</span>
+          <input id="apiKey" name="api_key" type="password" placeholder="sk-..." />
+        </label>
+        <label>
+          <span>默认模型</span>
+          <input id="apiModel" name="model" list="modelOptions" placeholder="gpt-image-2" />
+          <datalist id="modelOptions"></datalist>
+        </label>
+        <p>兼容 OpenAI 图片接口：后端会自动请求 <code>/v1/images/generations</code> 和 <code>/v1/images/edits</code>。</p>
+        <button type="button" class="secondary-action" id="fetchModelsBtn">获取模型</button>
+        <button type="submit">保存设置</button>
+      </form>
+    </dialog>
+
+    <dialog class="settings-dialog" id="templateDialog">
+      <form class="settings-card" id="templateForm" method="dialog">
+        <div class="settings-head">
+          <strong id="templateDialogTitle">新增模板</strong>
+          <button type="button" id="closeTemplateBtn">×</button>
+        </div>
+        <input id="templateId" type="hidden" />
+        <label>
+          <span>模板名称</span>
+          <input id="templateTitle" placeholder="例如：小红书商品图" />
+        </label>
+        <label>
+          <span>提示词内容</span>
+          <textarea id="templatePrompt" class="template-editor" placeholder="输入可复用的提示词模板"></textarea>
+        </label>
+        <button type="submit">保存模板</button>
+      </form>
+    </dialog>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+*.spec
+.check_tmp*/
+history.sqlite3
+config.json
+output/
+outputs/
+web_app/data/
+.env
+.env.*
